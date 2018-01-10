@@ -44,12 +44,15 @@
 
     <ImageView
         android:id="@+id/imgPicture"
-        android:layout_width="374dp"
-        android:layout_height="171dp"
-        android:layout_marginTop="48dp"
+        android:layout_width="361dp"
+        android:layout_height="175dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="@+id/tv_repo_list"
+        app:layout_constraintStart_toStartOf="@+id/tv_repo_list"
         app:layout_constraintTop_toBottomOf="@+id/tv_repo_list"
-        app:srcCompat="@android:color/darker_gray"
-        tools:layout_editor_absoluteX="18dp" />
+        app:srcCompat="@android:color/darker_gray" />
 
 
 </android.support.constraint.ConstraintLayout>
