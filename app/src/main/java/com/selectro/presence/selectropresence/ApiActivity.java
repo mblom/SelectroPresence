@@ -1,5 +1,6 @@
 package com.selectro.presence.selectropresence;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -29,11 +30,16 @@ import org.json.JSONException;
 
 import java.io.InputStream;
 
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
+
 public class ApiActivity extends AppCompatActivity {
     EditText etGitHubUser; // This will be a reference to our GitHub username input.
     Button btnGetRepos;  // This is a reference to the "Get Repos" button.
     TextView tvRepoList;  // This will reference our repo list text box.
     ImageView imgPicure;
+    Button btnBarcode;
+    public static TextView tvresult;
 
     RequestQueue requestQueue;  // This is our requests queue to process our HTTP requests.
 
@@ -51,6 +57,24 @@ public class ApiActivity extends AppCompatActivity {
         this.btnGetRepos = (Button) findViewById(R.id.btn_get_repos);  // Link our clicky button.
         this.tvRepoList = (TextView) findViewById(R.id.tv_repo_list);  // Link our repository list text output box.
         this.tvRepoList.setMovementMethod(new ScrollingMovementMethod());  // This makes our text box scrollable, for those big GitHub contributors with lots of repos :)
+
+        this.tvresult = (TextView) findViewById(R.id.tvresult);  // Link our repository list text output box.
+
+        this.btnBarcode = (Button) findViewById(R.id.btnBarcode);  // Link our clicky button.
+        btnBarcode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                IntentIntegrator integrator = new IntentIntegrator(this);
+
+                integrator.setPrompt("Scan a barcode or QRcode");
+
+                integrator.setOrientationLocked(false);
+
+                integrator.initiateScan();
+                Intent intent = new Intent(ApiActivity.this, ScanActivity.class);
+                startActivity(intent);
+            }
+        });
 
         requestQueue = Volley.newRequestQueue(this);  // This setups up a new request queue which we will need to make HTTP requests.
 

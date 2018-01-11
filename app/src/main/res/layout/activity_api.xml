@@ -54,6 +54,30 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_repo_list"
         app:srcCompat="@android:color/darker_gray" />
 
+    <Button
+        android:id="@+id/btnBarcode"
+        android:layout_width="112dp"
+        android:layout_height="69dp"
+        android:layout_marginBottom="136dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Barcode"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgPicture" />
+
+    <TextView
+        android:id="@+id/tvresult"
+        android:layout_width="83dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        app:layout_constraintTop_toBottomOf="@+id/btnBarcode"
+        tools:layout_editor_absoluteX="164dp" />
+
 
 </android.support.constraint.ConstraintLayout>
 
