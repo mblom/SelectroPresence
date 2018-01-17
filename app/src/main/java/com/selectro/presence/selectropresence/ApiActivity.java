@@ -8,7 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -34,7 +36,9 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
 public class ApiActivity extends AppCompatActivity {
-    EditText etGitHubUser; // This will be a reference to our GitHub username input.
+    EditText etPincode; // This will be a reference to our GitHub username input.
+    EditText etUsername; // This will be a reference to our GitHub username input.
+
     Button btnGetRepos;  // This is a reference to the "Get Repos" button.
     TextView tvRepoList;  // This will reference our repo list text box.
     ImageView imgPicure;
@@ -53,32 +57,38 @@ public class ApiActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);  // This is some magic for Android to load a previously saved state for when you are switching between actvities.
         setContentView(R.layout.activity_api);  // This links our code to our layout which we defined earlier.
 
-        this.etGitHubUser = (EditText) findViewById(R.id.et_github_user);  // Link our github user text box.
+        this.etPincode = (EditText) findViewById(R.id.et_pincode);  // Link our github user text box.
+        this.etUsername = (EditText) findViewById(R.id.et_username);  // Link our github user text box.
+
         this.btnGetRepos = (Button) findViewById(R.id.btn_get_repos);  // Link our clicky button.
         this.tvRepoList = (TextView) findViewById(R.id.tv_repo_list);  // Link our repository list text output box.
         this.tvRepoList.setMovementMethod(new ScrollingMovementMethod());  // This makes our text box scrollable, for those big GitHub contributors with lots of repos :)
 
-        this.tvresult = (TextView) findViewById(R.id.tvresult);  // Link our repository list text output box.
-
-        this.btnBarcode = (Button) findViewById(R.id.btnBarcode);  // Link our clicky button.
-        btnBarcode.setOnClickListener(new View.OnClickListener() {
-            @Override
+        btnGetRepos.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                IntentIntegrator integrator = new IntentIntegrator(this);
-
-                integrator.setPrompt("Scan a barcode or QRcode");
-
-                integrator.setOrientationLocked(false);
-
-                integrator.initiateScan();
-                Intent intent = new Intent(ApiActivity.this, ScanActivity.class);
-                startActivity(intent);
+            getReposClicked();
             }
         });
 
+        etUsername.requestFocus();
         requestQueue = Volley.newRequestQueue(this);  // This setups up a new request queue which we will need to make HTTP requests.
 
+        etPincode.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+
+                switch (actionId) {
+
+                    case EditorInfo.IME_ACTION_SEND:
+                        getReposClicked();
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+        });
     }
+
 
     private void clearRepoList() {
         // This will clear the repo list (set it as a blank string).
@@ -104,11 +114,11 @@ public class ApiActivity extends AppCompatActivity {
         this.tvRepoList.setText(str);
     }
 
-    private void getRepoList(String uid) {
+    private void getRepoList(String username, String pincode) {
         // First, we insert the username into the repo url.
         // The repo url is defined in GitHubs API docs (https://developer.github.com/v3/repos/).
         //this.url = this.baseUrl + username + "/repos";
-        this.url = this.baseUrl + uid;
+        this.url = this.baseUrl + username + "/" + pincode;
         Log.e("Url", url);
 
         // Next, we create a new JsonArrayRequest. This will use Volley to make a HTTP request
@@ -152,12 +162,12 @@ public class ApiActivity extends AppCompatActivity {
         requestQueue.add(arrReq);
     }
 
-    public void getReposClicked(View v) {
+    public void getReposClicked() {
         // Clear the repo list (so we have a fresh screen to add to)
         clearRepoList();
         // Call our getRepoList() function that is defined above and pass in the
         // text which has been entered into the etGitHubUser text input field.
-        getRepoList(etGitHubUser.getText().toString());
+        getRepoList(etUsername.getText().toString(),etPincode.getText().toString());
     }
 
     private class DownloadImageFromInternet extends AsyncTask<String, Void, Bitmap> {
