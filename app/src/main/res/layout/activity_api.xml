@@ -14,9 +14,9 @@
         android:layout_marginTop="8dp"
         android:digits="0123456789"
         android:ems="10"
+        android:hint="pincode"
         android:imeOptions="actionSend"
         android:inputType="numberSigned"
-        android:hint="pincode"
         app:layout_constraintStart_toEndOf="@+id/imgPicture"
         app:layout_constraintTop_toBottomOf="@+id/et_username"
         tools:text="" />
@@ -28,11 +28,11 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:ems="10"
-        android:inputType="text"
         android:hint="username"
+        android:inputType="text"
         app:layout_constraintStart_toEndOf="@+id/imgPicture"
         app:layout_constraintTop_toTopOf="parent" />
-        tools:text="111" />
+    tools:text="111" />
 
     <Button
         android:id="@+id/btn_get_repos"
@@ -44,6 +44,15 @@
         app:layout_constraintStart_toEndOf="@+id/et_pincode"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Button
+        android:id="@+id/btnOpenRelays"
+        android:layout_width="118dp"
+        android:layout_height="69dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="relays"
+        app:layout_constraintStart_toEndOf="@+id/btn_get_repos"
+        app:layout_constraintTop_toTopOf="parent" />
     <TextView
         android:id="@+id/tv_repo_list"
         android:layout_width="376dp"
@@ -63,7 +72,15 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:color/darker_gray" />
 
-
+    <TextView
+        android:id="@+id/tv_tag_results"
+        android:layout_width="376dp"
+        android:layout_height="146dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_repo_list">
+    </TextView>
 </android.support.constraint.ConstraintLayout>
 
 

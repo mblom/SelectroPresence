@@ -35,8 +35,7 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".MainActivity" />
-        <activity android:name=".ScanActivity"></activity>
+        <activity android:name=".ScanActivity" />
     </application>
 
 </manifest>
